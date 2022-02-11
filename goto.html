@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+<meta name="theme-color" content="#161616" />
+<meta name="robots" content="noindex, nofollow" />
+<title>redir-to-link</title>
+<script>
+window.onload = function() {
+
+	let link = decodeURI(location.search.substring(1).replace(/^link=/g, ''));
+
+	let allow = new RegExp('^(https?:\/\/|ftp:\/\/|sftp:\/\/|magnet:\\?xt=urn:btih:)\\S*[^ ]$', 'gi');
+	let prevent = new RegExp('^https?:\/\/' + window.location.hostname, 'gi');
+
+	if (link.match(allow) && !link.match(prevent)) {
+		document.getElementById('destination').innerText = link;
+		location = link;
+	}
+	else {
+		location = '404.html';
+	}
+};
+</script>
+</head>
+<body style="background:#26272b;">
+
+<div style="position:fixed;
+			top:50%;
+			left:50%;
+			transform:translate(-50%, -50%);
+			font-family:arial;
+			text-align:center;">
+
+	<div style="font-size:24px; color:#ffffff; margin-bottom:15px;">Redirect to</div>
+	<div style="color:#dadada;" id="destination"></div>
+
+</div>
+
+</body>
+</html>
